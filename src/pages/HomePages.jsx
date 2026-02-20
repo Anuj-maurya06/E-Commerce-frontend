@@ -205,6 +205,11 @@ useEffect(() => {
                 src="/image/l1.webp"
                 className="card-img-top p-3"
                 alt="Analog Watch"
+                style={{
+                  height: "200px",
+               objectFit: "cover",
+               width: "100%"
+               }}                       
               />
               <div className="card-body">
                 <h5 className="card-title">Analog</h5>
@@ -223,6 +228,11 @@ useEffect(() => {
                 src="/image/l2.webp"
                 className="card-img-top p-3"
                 alt="Digital Watch"
+                   style={{
+                 height: "200px",
+                 objectFit: "cover",
+                 width: "100%"
+                }}
               />
               <div className="card-body">
                 <h5 className="card-title">Digital</h5>
@@ -241,6 +251,11 @@ useEffect(() => {
                 src="/image/l3.jpg"
                 className="card-img-top p-3"
                 alt="Smart Watch"
+                style={{
+               height: "200px",
+               objectFit: "cover",
+               width: "100%"
+               }}
               />
               <div className="card-body">
                 <h5 className="card-title">Smart Watch</h5>
@@ -259,6 +274,11 @@ useEffect(() => {
                 src="/image/l4.jpg"
                 className="card-img-top p-3"
                 alt="Luxury Watch"
+                style={{
+                height: "200px",
+                 objectFit: "cover",
+                 width: "100%"
+                 }}
               />
               <div className="card-body">
                 <h5 className="card-title">Luxury</h5>
