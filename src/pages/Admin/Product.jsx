@@ -31,8 +31,6 @@ const Products = () => {
     getAllProducts();
   }, []);
 
- 
- 
 
   return (
     <Layout>
@@ -44,9 +42,15 @@ const Products = () => {
         <div className="col-md-9">
           <h1 className="text-center">All Products List</h1>
  
-
           <div className="d-flex flex-wrap">
   {products?.map((p) => (
+             
+               <Link
+                key={p._id}
+                to={`/dashboard/admin/product/${p.slug}`}
+                className="product-link"
+              >
+                
     <div 
       key={p._id}
       className="card m-2"
@@ -107,6 +111,7 @@ const Products = () => {
 
       </div>
     </div>
+    </Link>
   ))}
 </div>   
                 
