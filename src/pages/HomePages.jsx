@@ -8,7 +8,7 @@ import {useCart} from '../context/Cart';
 import toast from "react-hot-toast";
 import { AiOutlineReload } from "react-icons/ai";
 
-import "../styles/HomePage.css";
+import "../styles/Homepage.css";
 
   const API = "https://e-commerce-backend-orcin-nine.vercel.app";
 
