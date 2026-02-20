@@ -19,14 +19,12 @@ import Users from './pages/Admin/Users';
 import Order from './pages/user/Order';
 import Profile from './pages/user/Profile';
 import Products from './pages/Admin/Product';
-import UpdateProduct from './pages/Admin/updateProduct';
+import UpdateProduct from './pages/Admin/UpdateProduct';
 import Search from './pages/Search';
 import Categories from './pages/Categories';
 import CategoryProduct from './pages/CategoryProduct';
 import CartPage from './pages/CartPage';
 import FaqPage from './pages/FaqPages'
- 
- 
  
  
  const App = () => {
