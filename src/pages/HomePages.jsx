@@ -202,7 +202,7 @@ useEffect(() => {
               onClick={() => navigate("/category/analog")}
             >
               <img
-                src="/image/a1.png"
+                src="/image/l1.webp"
                 className="card-img-top p-3"
                 alt="Analog Watch"
               />
@@ -220,7 +220,7 @@ useEffect(() => {
               onClick={() => navigate("/category/digital")}
             >
               <img
-                src="/image/a2.png"
+                src="/image/l2.webp"
                 className="card-img-top p-3"
                 alt="Digital Watch"
               />
@@ -235,10 +235,10 @@ useEffect(() => {
             <div
               className="card shadow-lg h-100 border-0"
               style={{ cursor: "pointer" }}
-              onClick={() => navigate("/category/smart-watch")}
+              onClick={() => navigate("/category/smart-watches")}
             >
               <img
-                src="/image/a3.png"
+                src="/image/l3.jpg"
                 className="card-img-top p-3"
                 alt="Smart Watch"
               />
@@ -256,7 +256,7 @@ useEffect(() => {
               onClick={() => navigate("/category/luxury")}
             >
               <img
-                src="/image/a2.png"
+                src="/image/l4.jpg"
                 className="card-img-top p-3"
                 alt="Luxury Watch"
               />
