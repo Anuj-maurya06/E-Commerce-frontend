@@ -331,7 +331,8 @@ useEffect(() => {
             </button>
           </div>
         </div>
-        <div className="col-md-9">
+
+        {/* <div className="col-md-9">
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
@@ -345,8 +346,7 @@ useEffect(() => {
                   className="card-img-top"
                   alt={p.name}
                 />
-
-     
+  
        <div className="card-body">
                   <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
@@ -407,7 +407,81 @@ useEffect(() => {
             )}
           </div>
         </div>
+      </div> */}
+      <div className="col-md-9">
+  <h1 className="text-center">All Products</h1>
+
+  <div className="row">
+    {products?.map((p) => (
+      <div 
+        key={p._id}
+        className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+      >
+        <div className="card h-100">
+          <img
+            src={`${API}/api/v1/product/product-photo/${p._id}`}
+            className="card-img-top"
+            alt={p.name}
+          />
+
+          <div className="card-body d-flex flex-column">
+            <div className="card-name-price">
+              <h5 className="card-title">{p.name}</h5>
+              <h5 className="card-title card-price">
+                {p.price.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
+              </h5>
+            </div>
+
+            <p className="card-text">
+              {p.description.substring(0, 60)}...
+            </p>
+
+            <div className="mt-auto">
+              <button
+                className="btn btn-info w-100 mb-2"
+                onClick={() => navigate(`/product/${p.slug}`)}
+              >
+                More Details
+              </button>
+
+              <button
+                className="btn btn-dark w-100"
+                onClick={() => {
+                  setCart([...cart, p]);
+                  localStorage.setItem(
+                    "cart",
+                    JSON.stringify([...cart, p])
+                  );
+                  toast.success("Item Added to cart");
+                }}
+              >
+                ADD TO CART
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+    ))}
+  </div>
+
+  <div className="m-2 p-3 text-center">
+    {products && products.length < total && (
+      <button
+        className="btn loadmore"
+        onClick={(e) => {
+          e.preventDefault();
+          setPage(page + 1);
+        }}
+      >
+        {loading ? "Loading ..." : <>Loadmore</>}
+      </button>
+    )}
+  </div>
+</div>
+</div>
     </Layout>
 
  
