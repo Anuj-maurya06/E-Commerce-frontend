@@ -333,53 +333,50 @@ useEffect(() => {
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Products</h1>
-          <div className="d-flex flex-wrap">
+          <div className="row">
             {products?.map((p) => (
-              <div 
-                key={p._id}
-              className="card m-2 "
-              //  style={{ width: "18rem" }}>  
-                >
-                <img
-                  src={`${API}/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
+              <div className="col-6 col-md-4 col-lg-3 mb-3" key={p._id}>
+                <div className="card">
+                  <img
+                    src={`${API}/api/v1/product/product-photo/${p._id}`}
+                    className="card-img-top"
+                    alt={p.name}
+                  />
 
-     
-       <div className="card-body">
-                  <div className="card-name-price">
-                    <h5 className="card-title">{p.name}</h5>
-                    <h5 className="card-title card-price">
-                      {p.price.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </h5>
-                  </div>
-                  <p className="card-text ">
-                    {p.description.substring(0, 60)}...
-                  </p>
-                  <div className="card-name-price">
-                    <button
-                      className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="btn btn-dark ms-1"
-                      onClick={() => {
-                        setCart([...cart, p]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, p])
-                        );
-                        toast.success("Item Added to cart");
-                      }}
-                    >
-                      ADD TO CART
-                    </button>
+                  <div className="card-body">
+                    <div className="card-name-price">
+                      <h5 className="card-title">{p.name}</h5>
+                      <h5 className="card-title card-price">
+                        {p.price.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
+                      </h5>
+                    </div>
+                    <p className="card-text ">
+                      {p.description.substring(0, 60)}...
+                    </p>
+                    <div className="card-name-price">
+                      <button
+                        className="btn btn-info ms-1"
+                        onClick={() => navigate(`/product/${p.slug}`)}
+                      >
+                        More Details
+                      </button>
+                      <button
+                        className="btn btn-dark ms-1"
+                        onClick={() => {
+                          setCart([...cart, p]);
+                          localStorage.setItem(
+                            "cart",
+                            JSON.stringify([...cart, p])
+                          );
+                          toast.success("Item Added to cart");
+                        }}
+                      >
+                        ADD TO CART
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
