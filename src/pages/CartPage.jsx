@@ -104,111 +104,239 @@ const CartPage = () => {
 
   return (
     <Layout>
-      <div className=" cart-page">
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="text-center bg-light p-2 mb-1">
-              {!auth?.user
-                ? "Hello Guest"
-                : `Hello  ${auth?.token && auth?.user?.name}`}
-              <p className="text-center">
-                {cart?.length
-                  ? `You Have ${cart.length} items in your cart ${
-                      auth?.token ? "" : "please login to checkout !"
-                    }`
-                  : " Your Cart Is Empty"}
-              </p>
-            </h1>
-          </div>
-        </div>
-        <div className="container ">
-          <div className="row ">
-            <div className="col-md-7  p-0 m-0">
-              {cart?.map((p) => (
-                <div className="row card flex-row" key={p._id}>
-                  <div className="col-md-4">
-                    <img
-                      src={`${API}/api/v1/product/product-photo/${p._id}`}
-                      className="card-img-top"
-                      alt={p.name}
-                      width="100%"
-                      height={"130px"}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <p>{p.name}</p>
-                    <p>{p.description.substring(0, 30)}</p>
-                    <p>Price : {p.price}</p>
-                  </div>
-                  <div className="col-md-4 cart-remove-btn">
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => removeCartItem(p._id)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="col-md-5 cart-summary ">
-              <h2>Cart Summary</h2>
-              <p>Total | Checkout | Payment</p>
-              <hr />
-              <h4>Total : {totalPrice()} </h4>
-              {auth?.user?.address ? (
-                <>
-                  <div className="mb-3">
-                    <h4>Current Address</h4>
-                    <h5>{auth?.user?.address}</h5>
-                    <button
-                      className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
-                    >
-                      Update Address
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div className="mb-3">
-                  {auth?.token ? (
-                    <button
-                      className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
-                    >
-                      Update Address
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-outline-warning"
-                      onClick={() =>
-                        navigate("/login", {
-                          state: "/cart",
-                        })
-                      }
-                    >
-                      Plase Login to checkout
-                    </button>
-                  )}
-                </div>
-              )}
-               
-              {/* Razorpay Payment Button */}
-          {auth?.token && cart?.length > 0 && (
-           <button
-           className="btn btn-primary w-100 mt-3"
-           onClick={handleRazorpayPayment}
-           disabled={loading || !auth?.user?.address}
-           >
-           {loading ? "Processing..." : "Checkout with Razorpay"}
-           </button>
-               )}
-
-            </div>
-          </div>
-        </div>
+  <div className="cart-page">
+    
+    <div className="row">
+      <div className="col-12">
+        <h1 className="text-center bg-light p-2 mb-3">
+          {!auth?.user
+            ? "Hello Guest"
+            : `Hello ${auth?.token && auth?.user?.name}`}
+          
+          <p className="text-center">
+            {cart?.length
+              ? `You Have ${cart.length} items in your cart ${
+                  auth?.token ? "" : "please login to checkout !"
+                }`
+              : "Your Cart Is Empty"}
+          </p>
+        </h1>
       </div>
-    </Layout>
+    </div>
+
+    <div className="container">
+      <div className="row">
+
+        {/* LEFT SIDE - CART ITEMS */}
+        <div className="col-12 col-md-7">
+          {cart?.map((p) => (
+            <div
+              className="card mb-3 p-2"
+              key={p._id}
+            >
+              <div className="row g-2 align-items-center">
+
+                {/* IMAGE */}
+                <div className="col-4 col-md-4">
+                  <img
+                    src={`${API}/api/v1/product/product-photo/${p._id}`}
+                    className="img-fluid rounded"
+                    alt={p.name}
+                    style={{ height: "120px", objectFit: "cover" }}
+                  />
+                </div>
+
+                {/* DETAILS */}
+                <div className="col-8 col-md-5">
+                  <p className="mb-1 fw-bold">{p.name}</p>
+                  <p className="mb-1 text-muted">
+                    {p.description.substring(0, 40)}...
+                  </p>
+                  <p className="mb-0">₹ {p.price}</p>
+                </div>
+
+                {/* REMOVE BUTTON */}
+                <div className="col-12 col-md-3 text-md-end text-center mt-2 mt-md-0">
+                  <button
+                    className="btn btn-danger w-100 w-md-auto"
+                    onClick={() => removeCartItem(p._id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* RIGHT SIDE - SUMMARY */}
+        <div className="col-12 col-md-5 mt-4 mt-md-0">
+          <div className="cart-summary p-3 border rounded">
+            <h2>Cart Summary</h2>
+            <p>Total | Checkout | Payment</p>
+            <hr />
+
+            <h4>Total : {totalPrice()} </h4>
+
+            {auth?.user?.address ? (
+              <div className="mb-3">
+                <h5>Current Address</h5>
+                <p>{auth?.user?.address}</p>
+                <button
+                  className="btn btn-outline-warning w-100"
+                  onClick={() => navigate("/dashboard/user/profile")}
+                >
+                  Update Address
+                </button>
+              </div>
+            ) : (
+              <div className="mb-3">
+                {auth?.token ? (
+                  <button
+                    className="btn btn-outline-warning w-100"
+                    onClick={() => navigate("/dashboard/user/profile")}
+                  >
+                    Update Address
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-outline-warning w-100"
+                    onClick={() =>
+                      navigate("/login", {
+                        state: "/cart",
+                      })
+                    }
+                  >
+                    Please Login to checkout
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Razorpay Button */}
+            {auth?.token && cart?.length > 0 && (
+              <button
+                className="btn btn-primary w-100 mt-3"
+                onClick={handleRazorpayPayment}
+                disabled={loading || !auth?.user?.address}
+              >
+                {loading ? "Processing..." : "Checkout with Razorpay"}
+              </button>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</Layout>
+    // <Layout>
+    //   <div className=" cart-page">
+    //     <div className="row">
+    //       <div className="col-md-12">
+    //         <h1 className="text-center bg-light p-2 mb-1">
+    //           {!auth?.user
+    //             ? "Hello Guest"
+    //             : `Hello  ${auth?.token && auth?.user?.name}`}
+    //           <p className="text-center">
+    //             {cart?.length
+    //               ? `You Have ${cart.length} items in your cart ${
+    //                   auth?.token ? "" : "please login to checkout !"
+    //                 }`
+    //               : " Your Cart Is Empty"}
+    //           </p>
+    //         </h1>
+    //       </div>
+    //     </div>
+    //     <div className="container ">
+    //       <div className="row ">
+    //         <div className="col-md-7  p-0 m-0">
+    //           {cart?.map((p) => (
+    //             <div className="row card flex-row" key={p._id}>
+    //               <div className="col-md-4">
+    //                 <img
+    //                   src={`${API}/api/v1/product/product-photo/${p._id}`}
+    //                   className="card-img-top"
+    //                   alt={p.name}
+    //                   width="100%"
+    //                   height={"130px"}
+    //                 />
+    //               </div>
+    //               <div className="col-md-4">
+    //                 <p>{p.name}</p>
+    //                 <p>{p.description.substring(0, 30)}</p>
+    //                 <p>Price : {p.price}</p>
+    //               </div>
+    //               <div className="col-md-4 cart-remove-btn">
+    //                 <button
+    //                   className="btn btn-danger"
+    //                   onClick={() => removeCartItem(p._id)}
+    //                 >
+    //                   Remove
+    //                 </button>
+    //               </div>
+    //             </div>
+    //           ))}
+    //         </div>
+    //         <div className="col-md-5 cart-summary ">
+    //           <h2>Cart Summary</h2>
+    //           <p>Total | Checkout | Payment</p>
+    //           <hr />
+    //           <h4>Total : {totalPrice()} </h4>
+    //           {auth?.user?.address ? (
+    //             <>
+    //               <div className="mb-3">
+    //                 <h4>Current Address</h4>
+    //                 <h5>{auth?.user?.address}</h5>
+    //                 <button
+    //                   className="btn btn-outline-warning"
+    //                   onClick={() => navigate("/dashboard/user/profile")}
+    //                 >
+    //                   Update Address
+    //                 </button>
+    //               </div>
+    //             </>
+    //           ) : (
+    //             <div className="mb-3">
+    //               {auth?.token ? (
+    //                 <button
+    //                   className="btn btn-outline-warning"
+    //                   onClick={() => navigate("/dashboard/user/profile")}
+    //                 >
+    //                   Update Address
+    //                 </button>
+    //               ) : (
+    //                 <button
+    //                   className="btn btn-outline-warning"
+    //                   onClick={() =>
+    //                     navigate("/login", {
+    //                       state: "/cart",
+    //                     })
+    //                   }
+    //                 >
+    //                   Plase Login to checkout
+    //                 </button>
+    //               )}
+    //             </div>
+    //           )}
+               
+    //           {/* Razorpay Payment Button */}
+    //       {auth?.token && cart?.length > 0 && (
+    //        <button
+    //        className="btn btn-primary w-100 mt-3"
+    //        onClick={handleRazorpayPayment}
+    //        disabled={loading || !auth?.user?.address}
+    //        >
+    //        {loading ? "Processing..." : "Checkout with Razorpay"}
+    //        </button>
+    //            )}
+
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </Layout>
   );
 };
 
