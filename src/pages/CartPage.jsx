@@ -107,82 +107,74 @@ const CartPage = () => {
   <div className="cart-page">
 
     {/* HEADER */}
-    <div className="row">
-      <div className="col-12">
-        <h1 className="text-center bg-light p-2 mb-3">
-          {!auth?.user
-            ? "Hello Guest"
-            : `Hello ${auth?.token && auth?.user?.name}`}
+    <div className="container">
+      <h1 className="text-center bg-light p-2 mb-3">
+        {!auth?.user
+          ? "Hello Guest"
+          : `Hello ${auth?.user?.name}`}
 
-          <p className="text-center mb-0">
-            {cart?.length
-              ? `You Have ${cart.length} items in your cart ${
-                  auth?.token ? "" : "please login to checkout !"
-                }`
-              : "Your Cart Is Empty"}
-          </p>
-        </h1>
-      </div>
+        <p className="mb-0">
+          {cart?.length
+            ? `You Have ${cart.length} items in your cart ${
+                auth?.token ? "" : "please login to checkout !"
+              }`
+            : "Your Cart Is Empty"}
+        </p>
+      </h1>
     </div>
 
     <div className="container">
       <div className="row">
 
-        {/* LEFT SIDE - CART ITEMS */}
+        {/* LEFT SIDE */}
         <div className="col-12 col-md-7">
 
           {cart?.map((p) => (
-            <div className="card mb-3 p-3 shadow-sm" key={p._id}>
-              <div className="row g-3 align-items-center">
+            <div key={p._id} className="card mb-3 p-3 shadow-sm">
 
-                {/* IMAGE */}
-                <div className="col-12 col-md-4 text-center">
-                  <img
-                    src={`${API}/api/v1/product/product-photo/${p._id}`}
-                    className="img-fluid rounded"
-                    alt={p.name}
-                    style={{ height: "100px", objectFit: "cover" }}
-                  />
-                </div>
-
-                {/* DETAILS */}
-                <div className="col-12 col-md-5 text-center text-md-start">
-                  <p className="mb-1 fw-bold">{p.name}</p>
-                  <p className="mb-1 text-muted">
-                    {p.description.substring(0, 40)}...
-                  </p>
-                  <p className="mb-0">₹ {p.price}</p>
-                </div>
-
-                {/* REMOVE BUTTON */}
-                <div className="col-12 col-md-3 text-center mt-2">
-                  <button
-                    className="btn btn-danger w-100"
-                    onClick={() => removeCartItem(p._id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-
+              {/* IMAGE */}
+              <div className="text-center">
+                <img
+                  src={`${API}/api/v1/product/product-photo/${p._id}`}
+                  alt={p.name}
+                  className="img-fluid rounded mb-2"
+                  style={{ maxHeight: "150px", objectFit: "cover" }}
+                />
               </div>
+
+              {/* DETAILS */}
+              <div className="text-center">
+                <h5>{p.name}</h5>
+                <p className="text-muted">
+                  {p.description.substring(0, 40)}...
+                </p>
+                <h6>₹ {p.price}</h6>
+              </div>
+
+              {/* BUTTON */}
+              <button
+                className="btn btn-danger w-100 mt-2"
+                onClick={() => removeCartItem(p._id)}
+              >
+                Remove
+              </button>
+
             </div>
           ))}
 
         </div>
 
-        {/* RIGHT SIDE - SUMMARY */}
+        {/* RIGHT SIDE */}
         <div className="col-12 col-md-5 mt-4 mt-md-0">
           <div className="cart-summary p-3 border rounded bg-light">
 
             <h2>Cart Summary</h2>
-            <p>Total | Checkout | Payment</p>
             <hr />
 
             <h4>Total : {totalPrice()} </h4>
 
             {auth?.user?.address ? (
               <div className="mb-3">
-                <h5>Current Address</h5>
                 <p>{auth?.user?.address}</p>
                 <button
                   className="btn btn-outline-warning w-100"
@@ -204,25 +196,22 @@ const CartPage = () => {
                   <button
                     className="btn btn-outline-warning w-100"
                     onClick={() =>
-                      navigate("/login", {
-                        state: "/cart",
-                      })
+                      navigate("/login", { state: "/cart" })
                     }
                   >
-                    Please Login to checkout
+                    Please Login
                   </button>
                 )}
               </div>
             )}
 
-            {/* RAZORPAY BUTTON */}
             {auth?.token && cart?.length > 0 && (
               <button
-                className="btn btn-primary w-100 mt-3"
+                className="btn btn-primary w-100 mt-2"
                 onClick={handleRazorpayPayment}
                 disabled={loading || !auth?.user?.address}
               >
-                {loading ? "Processing..." : "Checkout with Razorpay"}
+                {loading ? "Processing..." : "Checkout"}
               </button>
             )}
 
