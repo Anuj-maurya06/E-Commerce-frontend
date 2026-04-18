@@ -408,26 +408,30 @@ useEffect(() => {
           </div>
         </div>
       </div> */}
-      <div className="col-md-9">
+ <div className="col-md-9">
   <h1 className="text-center">All Products</h1>
 
-  <div className="row">
+  <div className="row justify-content-center px-2">
     {products?.map((p) => (
-      <div 
+      <div
         key={p._id}
-        className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+        className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center mb-4"
       >
-        <div className="card h-100">
+        <div
+          className="card h-100"
+          style={{ width: "100%", maxWidth: "320px" }}
+        >
           <img
             src={`${API}/api/v1/product/product-photo/${p._id}`}
             className="card-img-top"
             alt={p.name}
+            style={{ height: "200px", objectFit: "cover" }}
           />
 
           <div className="card-body d-flex flex-column">
-            <div className="card-name-price">
+            <div className="d-flex justify-content-between align-items-center">
               <h5 className="card-title">{p.name}</h5>
-              <h5 className="card-title card-price">
+              <h5 className="card-title text-primary">
                 {p.price.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -476,7 +480,7 @@ useEffect(() => {
           setPage(page + 1);
         }}
       >
-        {loading ? "Loading ..." : <>Loadmore</>}
+        {loading ? "Loading ..." : "Load More"}
       </button>
     )}
   </div>
